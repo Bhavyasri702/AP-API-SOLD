@@ -1,19 +1,21 @@
 import pickle
 from flask import Flask,request
+
 api=Flask(__name__)
 
 with open('ai.pkl','rb') as f:
       ai=pickle.load(f)
+      
 @api.route('/')
-def  home():
-      return"API Server Running"
+def home():
+      return "API Server Running"
 
 @api.route('/predict',methods=['GET'])
 def predict():
     N=request.args.get('N')
     N=float(N)
-    p=request.args.get('P')
-    p=float(p)
+    P=request.args.get('P')
+    P=float(p)
     K=request.args.get('K')
     K=float(K)
     T=request.args.get('T')
@@ -24,9 +26,9 @@ def predict():
     PH=float(PH)
     R=request.args.get('R')
     R=float(R)
-data=[[N,P,K,T,H,PH,R]]
-response=ai.predict(data)[0]
-return response
+    data=[[N,P,K,T,H,PH,R]]
+    response=ai.predict(data)[0]
+    return response
 
 if __name__=="__main__":
     api.run(
